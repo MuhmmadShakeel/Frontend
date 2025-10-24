@@ -1,5 +1,6 @@
 // src/pages/SignUp.js
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import logo from "../Components/Images/logo.jpg";
 import "../style.css";
@@ -252,12 +253,12 @@ const SignUp = () => {
             <div className="text-center mt-8">
               <p className="text-gray-400 text-sm md:text-base">
                 Already have an account?{" "}
-                <a
-                  href="/login"
+                <Link
+                  to="/login"
                   className="text-[#00BFA6] hover:underline font-semibold"
                 >
                   Sign In
-                </a>
+                </Link>
               </p>
             </div>
 
