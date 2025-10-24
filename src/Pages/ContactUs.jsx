@@ -119,24 +119,9 @@ const ContactUs = () => {
           </div>
 
           <div className="mt-8 pt-4 space-y-2">
+            
             <a
-              href="/plans"
-              target="_blank"
-              rel="noopener"
-              className="block text-[#102040] hover:text-white transition duration-300"
-            >
-              Learn More About Our Plans →
-            </a>
-            <a
-              href="/"
-              target="_blank"
-              rel="noopener"
-              className="block text-[#102040] hover:text-white transition duration-300"
-            >
-              amnasnetwork.org →
-            </a>
-            <a
-              href="/community"
+              href="https://www.linkedin.com/in/amna-s-network-1b992434b"
               target="_blank"
               rel="noopener"
               className="block text-[#102040] hover:text-white transition duration-300"
