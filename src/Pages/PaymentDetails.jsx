@@ -103,7 +103,7 @@ const PaymentDetails = () => {
   );
 
   return (
-    <div className="px-6 md:px-16 py-12 bg-gray-50 min-h-screen">
+    <div className="px-4 md:px-16 py-12 bg-gray-50 min-h-screen">
       {/* Header */}
       <div className="text-center mb-12" data-aos="fade-down">
         <button
@@ -120,38 +120,36 @@ const PaymentDetails = () => {
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-10 justify-center items-start">
+      <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
         {/* Course Summary */}
         {course && (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full lg:w-1/2 max-w-md">
             <div
-              className="bg-white w-[400px] p-5 md:p-6 rounded-2xl shadow-lg  hover:shadow-2xl"
+              className="bg-white w-full p-5 md:p-6 rounded-2xl shadow-lg hover:shadow-2xl"
               data-aos="fade-right"
             >
               <h2 className="text-xl md:text-2xl font-bold text-[#0F172A] mb-4">Course Summary</h2>
-              <div className="flex items-center gap-4 mb-4">
-                <img
-                  src={course.thumbnail || 'https://via.placeholder.com/100x70/4A90E2/FFFFFF?text=Course'}
-                  alt={course.title}
-                  className="w-20 h-14 md:w-24 md:h-16 object-cover rounded-lg"
-                />
-                <div>
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mb-4">
+                <div  
+                  className="w-32 h-20 md:w-24 md:h-16 object-cover rounded-lg"> {course.title}
+                
+</div>                <div className="text-center sm:text-left">
                   <h3 className="font-semibold text-lg">{course.title}</h3>
                   {course.instructor && <p className="text-gray-500 text-sm">Instructor: {course.instructor}</p>}
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex gap-2 mt-2 justify-center sm:justify-start flex-wrap">
                     <span className={`px-2 py-1 rounded-full text-xs md:text-sm font-semibold ${getLevelBadgeClass(course.level)}`}>{course.level}</span>
                     <span className="px-2 py-1 rounded-full text-xs md:text-sm font-semibold bg-gray-200 text-gray-800">{course.category}</span>
                   </div>
                 </div>
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-[#00D5BE]">{formatPrice(course.price)}</div>
+              <div className="text-2xl md:text-3xl font-bold text-[#00D5BE] text-center">{formatPrice(course.price)}</div>
             </div>
 
             {/* Online Payment Image */}
             <img
               src="https://gnindia.dronacharya.info/images/Online-Fee-Payment.jpg"
               alt="Online Payment"
-              className="mt-6 w-[400px] rounded-2xl shadow-lg"
+              className="mt-6 w-full rounded-2xl shadow-lg object-cover"
               data-aos="fade-up"
             />
           </div>
@@ -159,7 +157,7 @@ const PaymentDetails = () => {
 
         {/* Payment Section */}
         <div
-          className="bg-white p-5 md:p-6 rounded-2xl shadow-lg transform transition-transform duration-700  hover:shadow-2xl w-full lg:w-[500px]"
+          className="bg-white p-5 md:p-6 rounded-2xl shadow-lg hover:shadow-2xl w-full lg:w-1/2 max-w-md"
           data-aos="fade-left"
         >
           <h2 className="text-xl md:text-2xl font-bold text-[#0F172A] mb-6">Payment Options</h2>
@@ -185,9 +183,9 @@ const PaymentDetails = () => {
             <div className="space-y-4">
               <p className="text-gray-600 text-sm md:text-base">Transfer the fee to the account below and send the screenshot to WhatsApp:</p>
               {Object.entries(bankDetails).map(([key,value]) => (
-                <div key={key} className="flex justify-between items-center p-3 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition">
+                <div key={key} className="flex justify-between items-center p-3 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition flex-wrap gap-2">
                   <span className="capitalize font-medium">{key.replace(/([A-Z])/g, ' $1')}</span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-semibold">{value}</span>
                     <button className="text-gray-500 hover:text-[#00D5BE]" onClick={()=>copyToClipboard(value)}>
                       <i className="bi bi-clipboard"></i>
@@ -205,7 +203,7 @@ const PaymentDetails = () => {
               <img
                 src={qrcode}
                 alt="QR Code"
-                className="mx-auto w-44 md:w-48 h-44 md:h-48 rounded-lg border-2 border-gray-200 shadow-lg  transition-transform duration-500"
+                className="mx-auto w-40 md:w-48 h-40 md:h-48 rounded-lg border-2 border-gray-200 shadow-lg transition-transform duration-500"
               />
             </div>
           )}
@@ -220,7 +218,7 @@ const PaymentDetails = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-6 grid grid-cols-2 gap-4">
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button onClick={()=>navigate(`/courses/${id}`)} className="border border-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 cursor-pointer transition">Back to Course</button>
             <button onClick={handlePaymentConfirm} className="bg-[#00D5BE] text-white px-4 py-2 rounded-lg hover:bg-[#0F172A] cursor-pointer transition">I Have Paid</button>
           </div>

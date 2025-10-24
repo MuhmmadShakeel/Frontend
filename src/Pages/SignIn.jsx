@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import logo from '../Components/Images/logo.jpg';
@@ -7,10 +8,7 @@ import '../style.css';
 import baseUrl from '../baseUrl';
 
 const SignIn = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -19,13 +17,8 @@ const SignIn = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: '' });
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (errors[e.target.name]) setErrors({ ...errors, [e.target.name]: '' });
   };
 
   const handleSubmit = async (e) => {
@@ -34,10 +27,7 @@ const SignIn = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(`${baseUrl}/api/users/login`, {
-        email: formData.email,
-        password: formData.password
-      });
+      const res = await axios.post(`${baseUrl}/api/users/login`, formData);
 
       if (res.data.success) {
         alert('Login successful!');
@@ -63,10 +53,14 @@ const SignIn = () => {
       >
         {/* Left Section */}
         <div
-          className="md:w-1/2 flex flex-col justify-center items-center bg-gradient-to-r from-[#0D152A] bg-[#00BFA6] text-white p-8"
+          className="md:w-1/2 flex flex-col justify-center items-center bg-gradient-to-r from-[#0D152A] to-[#00BFA6] text-white p-8"
           data-aos="fade-right"
         >
-          <img src={logo} alt="Company Logo" className="w-32 h-32 rounded-full shadow-lg mb-6" />
+          <img
+            src={logo}
+            alt="Company Logo"
+            className="w-32 h-32 rounded-full shadow-lg mb-6"
+          />
           <h1 className="text-3xl font-bold mb-3">Welcome Back!</h1>
           <p className="text-center text-blue-100 mb-6">
             Access your personalized learning dashboard and resources.
@@ -85,10 +79,7 @@ const SignIn = () => {
         </div>
 
         {/* Right Section */}
-        <div
-          className="md:w-1/2 p-10 flex flex-col justify-center"
-          data-aos="fade-left"
-        >
+        <div className="md:w-1/2 p-10 flex flex-col justify-center" data-aos="fade-left">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Sign In</h2>
           <p className="text-gray-500 mb-8">Access your learning dashboard</p>
 
@@ -105,9 +96,7 @@ const SignIn = () => {
                 } focus:ring-2 focus:ring-blue-500 outline-none transition`}
                 required
               />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-              )}
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
             </div>
 
             <div>
@@ -122,22 +111,16 @@ const SignIn = () => {
                 } focus:ring-2 focus:ring-blue-500 outline-none transition`}
                 required
               />
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-              )}
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
             </div>
 
-            {errors.submit && (
-              <div className="text-red-500 text-sm">{errors.submit}</div>
-            )}
+            {errors.submit && <div className="text-red-500 text-sm">{errors.submit}</div>}
 
             <button
               type="submit"
               disabled={!formData.email || !formData.password || loading}
               className={`w-full py-3 rounded-xl text-white font-semibold text-lg transition transform hover:scale-105 shadow-md ${
-                loading
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-[#102040] hover:opacity-90'
+                loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#102040] hover:opacity-90'
               }`}
             >
               {loading ? 'Signing In...' : 'Sign In'}
@@ -146,12 +129,12 @@ const SignIn = () => {
 
           <div className="text-center mt-8">
             <p className="text-gray-600">Don't have an account?</p>
-            <a
-              href="/signup"
+            <Link
+              to="/signup"
               className="text-[#102040] hover:underline font-semibold"
             >
               Create an account
-            </a>
+            </Link>
           </div>
         </div>
       </div>
