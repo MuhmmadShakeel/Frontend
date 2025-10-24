@@ -263,24 +263,9 @@ const SignUp = () => {
             </div>
 
             <div className="mt-10 border-t border-gray-700/40 pt-4 text-center text-sm space-x-4">
+              
               <a
-                href="/plans"
-                target="_blank"
-                rel="noopener"
-                className="text-[#00BFA6] hover:text-white transition"
-              >
-                Our Plans
-              </a>
-              <a
-                href="/"
-                target="_blank"
-                rel="noopener"
-                className="text-[#00BFA6] hover:text-white transition"
-              >
-                amnasnetwork.org
-              </a>
-              <a
-                href="/community"
+                href="https://www.linkedin.com/in/amna-s-network-1b992434b"
                 target="_blank"
                 rel="noopener"
                 className="text-[#00BFA6] hover:text-white transition"
