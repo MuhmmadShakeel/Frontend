@@ -11,7 +11,8 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-gradient-to-b from-[#090447] via-[#0a0a3f] to-[#050321] text-gray-300 pt-14 pb-8">
+    
+    <footer className="bg-gradient-to-b from-[#100a65] via-[#0a0a3f] to-[#050321] text-gray-300 pt-14">
       <div
         className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 border-b border-[#FFB900]/30 pb-12"
         data-aos="fade-up"
