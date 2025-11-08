@@ -1,27 +1,29 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+// React Icons کو امپورٹ کریں
+import { FaDownload } from 'react-icons/fa6'; 
+
 import certificate from "../Images/certificate.jpeg";
-import Certificate from "../Images/certificate1.jpeg"; // Note: It's good practice to rename imported components to distinguish them if they have similar names.
+import Certificate from "../Images/certificate1.jpeg";
 
 const OurRegistrations = () => {
   useEffect(() => {
     AOS.init({ 
-      duration: 1000, // اینیمیشن کی مدت کو تھوڑا کم کیا
+      duration: 1000, 
       once: true,
       easing: "ease-in-out",
-      disable: "mobile", // موبائل پر AOS کو غیر فعال کیا تاکہ کارکردگی بہتر ہو اور اوور فلو نہ ہو
+      disable: "mobile", 
     });
   }, []);
 
   const certificates = [
-    { src: certificate, title: "Official Business Registration" },
-    { src: Certificate, title: "Professional Accreditation" },
+    { src: certificate, title: "Official Business Registration", filename: "Amna_Business_Registration.jpeg" },
+    { src: Certificate, title: "Professional Accreditation", filename: "Amna_Professional_Accreditation.jpeg" },
   ];
 
   return (
-    // overflow-x-hidden کلاس شامل کی گئی تاکہ اینیمیشن اوور فلو سے بچا جا سکے
-    <section className="bg-[#090447] text-white py-14 lg:py-20 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+    <section className="bg-[#090447] text-white py-20 lg:py-28 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
       <div className="max-w-7xl mx-auto text-center space-y-20">
         
         {/* Section Heading */}
@@ -41,7 +43,6 @@ const OurRegistrations = () => {
           {certificates.map((item, idx) => (
             <div
               key={idx}
-              // اینیمیشن کو تھوڑا مختلف کیا
               data-aos={idx % 2 === 0 ? "flip-left" : "flip-right"}
               data-aos-delay={idx * 100}
               className="relative bg-[#0D0A63] rounded-3xl shadow-2xl transition-all duration-700 
@@ -56,18 +57,32 @@ const OurRegistrations = () => {
                 />
               </div>
 
-              {/* Title Overlay / Footer (More visible and professional) */}
+              {/* Title Overlay / Footer */}
               <div
-                data-aos="fade-up"
-                data-aos-duration="600"
-                className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-left"
+                className="absolute bottom-0 left-0 right-0 p-6 pt-10 bg-gradient-to-t from-black/80 to-transparent text-left flex justify-between items-end"
               >
-                <h3 className="text-white text-2xl font-bold mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-[#FFB900] text-sm font-medium">
-                    Verified Credibility
-                </p>
+                <div>
+                    <h3 className="text-white text-2xl font-bold mb-1">
+                      {item.title}
+                    </h3>
+                    <p className="text-[#FFB900] text-sm font-medium">
+                        Verified Credibility
+                    </p>
+                </div>
+
+                {/* --- DOWNLOAD BADGE --- */}
+                {/* <a> tag used with 'href' and 'download' attributes */}
+                <a 
+                  href={item.src} 
+                  download={item.filename} 
+                  className="bg-[#FFB900] text-[#090447] p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300 transform hover:scale-110"
+                  aria-label={`Download ${item.title}`}
+                  title={`Download ${item.title}`}
+                  onClick={(e) => e.stopPropagation()} // تاکہ کلک کرنے پر parent animation interfere نہ کرے
+                >
+                  <FaDownload className="text-xl" />
+                </a>
+                {/* --- END DOWNLOAD BADGE --- */}
               </div>
             </div>
           ))}
@@ -77,7 +92,7 @@ const OurRegistrations = () => {
         <div
           data-aos="zoom-in"
           data-aos-delay="300"
-          className="mt-16 bg-[#FFB900] text-[#090447] rounded-xl shadow-3xl py-10 px-5 md:px-16 max-w-4xl mx-auto border-4 border-white/40"
+          className="mt-16 bg-[#FFB900] text-[#090447] rounded-xl shadow-3xl py-10 px-8 md:px-16 max-w-4xl mx-auto border-4 border-white/40"
         >
           <h3 className="text-3xl md:text-4xl font-extrabold mb-3">Certified & Trusted</h3>
           <p className="text-lg leading-relaxed font-medium">
