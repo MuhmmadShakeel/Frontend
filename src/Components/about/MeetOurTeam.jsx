@@ -169,12 +169,100 @@ const MeetOurTeam = () => {
     },
   ];
 
+  // Marketing Team
+  const marketingTeam = [
+    {
+      name: "Mohsin",
+      role: "Marketing Team Lead",
+      desc: "Leads strategic marketing initiatives and campaigns to expand brand reach and drive business growth through innovative marketing solutions.",
+    },
+    {
+      name: "Farhan Khan",
+      role: "Digital Marketing Specialist",
+      desc: "Specializes in digital marketing strategies, SEO optimization, and online campaign management to maximize brand visibility and engagement.",
+    }
+  ];
+
+  // Social Media Management Team
+  const socialMediaTeam = [
+    {
+      name: "Social Media Management Team",
+      role: "Social Media Experts",
+      desc: "Our dedicated social media professionals create compelling content, manage online presence, and engage with our community across all platforms to build strong brand relationships.",
+    }
+  ];
+
   // ٹیم ممبرز کے لیے امیج کے مقامات/URLs (اگر دستیاب ہوں)
   const memberImages = {
     "Amna Kousar": "", // یہاں امیج پاتھ شامل کریں
     "Asadullah Jan": "",
     "Anum Malik": "",
     "Mohsin Raza": "",
+    "Mohsin": "",
+    "Farhan Khan": "",
+    "Social Media Management Team": "",
+  };
+
+  // Team Member Card Component
+  const TeamMemberCard = ({ member, idx, isSocialMediaTeam = false }) => {
+    const initials = member.name
+      .split(" ")
+      .map((n) => n[0])
+      .join("");
+
+    const imageSrc = memberImages[member.name];
+
+    return (
+      <div
+        key={idx}
+        data-aos={idx % 2 === 0 ? "fade-right" : "fade-left"}
+        data-aos-offset="150"
+        className={`flex flex-col lg:flex-row items-center gap-10 lg:gap-16 p-4 md:p-6 border-b border-[#FFB900]/20 ${
+          idx % 2 !== 0 ? "lg:flex-row-reverse" : ""
+        } ${isSocialMediaTeam ? 'justify-center' : ''}`}
+      >
+        
+        {/* Avatar / Image Section */}
+        <div
+          data-aos="zoom-in"
+          data-aos-delay="200"
+          className="flex-shrink-0 w-full lg:w-96 max-w-xs md:max-w-sm rounded-xl overflow-hidden shadow-2xl transition duration-700 hover:scale-[1.03] hover:shadow-[#FFB900]/50 relative group"
+        >
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              alt={member.name}
+              className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-110"
+            />
+          ) : (
+            <div className="w-full h-64 bg-gradient-to-br from-[#FFB900] to-[#FFD700] flex items-center justify-center text-[#090447] text-6xl font-extrabold p-4 transform transition duration-700 group-hover:scale-105">
+              {initials}
+            </div>
+          )}
+          {/* Hover Overlay */}
+          <div className="absolute inset-0 bg-[#090447]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+            <span className="text-white text-lg font-semibold">View Profile</span>
+          </div>
+        </div>
+
+        {/* Member Details Card */}
+        <div
+          data-aos="fade-up"
+          data-aos-delay="400"
+          className="flex-1 lg:max-w-xl p-6 md:p-8 bg-[#0D0A63] rounded-2xl shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#FFB900]/30 hover:scale-105 border border-[#FFB900]/20"
+        >
+          <p className="text-[#FFB900] font-semibold text-xl mb-1 uppercase tracking-wider">
+            {member.role}
+          </p>
+          <h3 className="text-4xl font-extrabold text-white mb-4 border-b border-[#FFB900]/30 pb-2">
+            {member.name}
+          </h3>
+          <p className="text-gray-200 text-lg leading-relaxed">
+            {member.desc}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -195,84 +283,35 @@ const MeetOurTeam = () => {
           </p>
         </div>
 
-        {/* Team Members Grid/List */}
+        {/* Core Team Members */}
         <div className="space-y-16">
-          {team.map((member, idx) => {
-            const initials = member.name
-              .split(" ")
-              .map((n) => n[0])
-              .join("");
+          {team.map((member, idx) => (
+            <TeamMemberCard key={idx} member={member} idx={idx} />
+          ))}
+        </div>
 
-            // اگر امیج دستیاب ہو تو استعمال کریں، ورنہ انیشیلز
-            const imageSrc = memberImages[member.name];
+        {/* Marketing Team Section */}
+        <div data-aos="fade-up" className="text-center">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#FFB900] mb-8">
+            Marketing Team
+          </h3>
+          <div className="space-y-16">
+            {marketingTeam.map((member, idx) => (
+              <TeamMemberCard key={idx} member={member} idx={idx} />
+            ))}
+          </div>
+        </div>
 
-            return (
-              <div
-                key={idx}
-                // دائیں اور بائیں کی اینیمیشن کا استعمال کیا
-                data-aos={idx % 2 === 0 ? "fade-right" : "fade-left"}
-                data-aos-offset="150"
-                className={`flex flex-col lg:flex-row items-center gap-10 lg:gap-16 p-4 md:p-6 border-b border-[#FFB900]/20 ${
-                  idx % 2 !== 0 ? "lg:flex-row-reverse" : "" // بدیل لے آؤٹ
-                }`}
-              >
-                
-                {/* Avatar / Image Section */}
-                <div
-                  data-aos="zoom-in"
-                  data-aos-delay="200"
-                  className="flex-shrink-0 w-full lg:w-96 max-w-xs md:max-w-sm rounded-xl overflow-hidden shadow-2xl transition duration-700 hover:scale-[1.03] hover:shadow-[#FFB900]/50 relative group"
-                >
-                  {imageSrc ? (
-                    <img
-                      src={imageSrc}
-                      alt={member.name}
-                      className="w-full h-auto object-cover transform transition duration-700 group-hover:scale-110"
-                    />
-                  ) : (
-                    // Initial Placeholder with enhanced design
-                    <div className="w-full h-64 bg-gradient-to-br from-[#FFB900] to-[#FFD700] flex items-center justify-center text-[#090447] text-6xl font-extrabold p-4 transform transition duration-700 group-hover:scale-105">
-                      {initials}
-                    </div>
-                  )}
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-[#090447]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <span className="text-white text-lg font-semibold">View Profile</span>
-                  </div>
-                </div>
-
-                {/* Member Details Card */}
-                <div
-                  data-aos="fade-up"
-                  data-aos-delay="400"
-                  className="flex-1 lg:max-w-xl p-6 md:p-8 bg-[#0D0A63] rounded-2xl shadow-xl transition-all duration-500 hover:shadow-2xl hover:shadow-[#FFB900]/30 hover:scale-105 border border-[#FFB900]/20"
-                >
-                  <p className="text-[#FFB900] font-semibold text-xl mb-1 uppercase tracking-wider">
-                    {member.role}
-                  </p>
-                  <h3 className="text-4xl font-extrabold text-white mb-4 border-b border-[#FFB900]/30 pb-2">
-                    {member.name}
-                  </h3>
-                  <p className="text-gray-200 text-lg leading-relaxed">
-                    {member.desc}
-                  </p>
-                  
-                  {/* Social Links/Contact (Optional) */}
-                  <div className="flex space-x-4 mt-6 pt-4 border-t border-[#FFB900]/20">
-                    <div className="w-8 h-8 bg-[#FFB900] rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer">
-                      <span className="text-[#090447] font-bold text-sm">L</span>
-                    </div>
-                    <div className="w-8 h-8 bg-[#FFB900] rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer">
-                      <span className="text-[#090447] font-bold text-sm">E</span>
-                    </div>
-                    <div className="w-8 h-8 bg-[#FFB900] rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer">
-                      <span className="text-[#090447] font-bold text-sm">M</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        {/* Social Media Management Team Section */}
+        <div data-aos="fade-up" className="text-center">
+          <h3 className="text-3xl md:text-4xl font-bold text-[#FFB900] mb-8">
+            Social Media Management Team
+          </h3>
+          <div className="space-y-16">
+            {socialMediaTeam.map((member, idx) => (
+              <TeamMemberCard key={idx} member={member} idx={idx} isSocialMediaTeam={true} />
+            ))}
+          </div>
         </div>
       </div>
 
