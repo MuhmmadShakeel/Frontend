@@ -173,13 +173,13 @@ const MeetOurTeam = () => {
   const marketingTeam = [
     {
       name: "Mohsin",
-      role: "Marketing Team Lead",
+      role: "Marketing Team",
       desc: "Leads strategic marketing initiatives and campaigns to expand brand reach and drive business growth through innovative marketing solutions.",
     },
     {
-      name: "Farhan Khan",
-      role: "Digital Marketing Specialist",
-      desc: "Specializes in digital marketing strategies, SEO optimization, and online campaign management to maximize brand visibility and engagement.",
+      name: "Farhan Khan and team",
+      role: "Social Media Management",
+      desc: "Specializes in Social Media strategies, and online campaign management to maximize brand visibility and engagement.",
     }
   ];
 
