@@ -193,7 +193,6 @@ const MeetOurTeam = () => {
     "Amna Kousar": "", // یہاں امیج پاتھ شامل کریں
     "Asadullah Jan": "",
     "Anum Malik": "",
-    "Mohsin Raza": "",
     "Mohsin": "",
     "Farhan Khan": "",
     "Social Media Management Team": "",
