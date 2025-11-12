@@ -162,11 +162,7 @@ const MeetOurTeam = () => {
       role: "Lead Event Manager",
       desc: "Orchestrates seamless and memorable professional events and seminars with high-level creativity and logistical precision.",
     },
-    {
-      name: "Mohsin Raza",
-      role: "Senior Content Strategist",
-      desc: "Develops engaging, high-quality content that resonates with our audience and significantly enhances our brand presence.",
-    },
+ 
   ];
 
   // Marketing Team

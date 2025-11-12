@@ -1,7 +1,7 @@
 // src/pages/User/ProfileUpdate.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import baseUrl from '../../baseUrl';
 const ProfileUpdate = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -114,27 +114,32 @@ const ProfileUpdate = () => {
 
       const response = await fetch(`${baseUrl}/api/users/profile`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}` 
+        },
         body: JSON.stringify(updateData)
       });
 
       const data = await response.json();
-      if (response.ok && data.success) {
+      
+      if (response.ok) {
         setMessage('Profile updated successfully!');
         const currentUser = JSON.parse(sessionStorage.getItem('user'));
         sessionStorage.setItem('user', JSON.stringify({
           ...currentUser,
-          fullName: data.data?.fullName || data.user?.fullName || data.fullName,
-          email: data.data?.email || data.user?.email || data.email,
-          phone: data.data?.phone || data.user?.phone || data.phone
+          fullName: data.data?.fullName || data.user?.fullName || data.fullName || formData.fullName,
+          email: data.data?.email || data.user?.email || data.email || formData.email,
+          phone: data.data?.phone || data.user?.phone || data.phone || formData.phone
         }));
         setFormData(prev => ({ ...prev, currentPassword: '', newPassword: '', confirmPassword: '' }));
         setErrors({});
         setTimeout(() => navigate('/user/dashboard'), 1500);
       } else {
-        setMessage(data.message || 'Failed to update profile');
+        setMessage(data.message || data.error || 'Failed to update profile');
       }
     } catch (error) {
+      console.error('Update error:', error);
       setMessage('Server error. Please try again.');
     } finally {
       setLoading(false);
@@ -176,8 +181,8 @@ const ProfileUpdate = () => {
                   onClick={() => handleNavigation(item.path)}
                   className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 relative group ${
                     window.location.pathname === item.path
-                      ? 'bg-gradient-to-r bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] border border-blue-200'
-                      : 'text-gray-600 hover:text-[#00D5BE]  hover:bg-gray-50'
+                      ? 'bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] text-white'
+                      : 'text-gray-600 hover:text-[#00D5BE] hover:bg-gray-50'
                   }`}
                 >
                   <span className="text-lg">{item.icon}</span>
@@ -185,7 +190,7 @@ const ProfileUpdate = () => {
                   
                   {/* Active indicator */}
                   {window.location.pathname === item.path && (
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] rounded-full" />
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-white rounded-full" />
                   )}
                 </button>
               ))}
@@ -193,7 +198,7 @@ const ProfileUpdate = () => {
 
             {/* Right side - User info */}
             <div className="flex items-center space-x-4">
-              <div className="hidden sm:flex items-center space-x-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl px-4 py-2 border border-blue-200">
+              <div className="hidden sm:flex items-center space-x-3 bg-gradient-to-r from-[#00D5BE]/10 to-[#00A3B5]/10 rounded-xl px-4 py-2 border border-[#00D5BE]/20">
                 <div className="w-8 h-8 bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] rounded-full flex items-center justify-center">
                   <span className="text-white font-bold text-sm">U</span>
                 </div>
@@ -244,17 +249,17 @@ const ProfileUpdate = () => {
                     onClick={() => handleNavigation(item.path)}
                     className={`w-full flex items-center space-x-4 px-4 py-4 rounded-xl transition-all duration-200 group ${
                       window.location.pathname === item.path
-                        ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-l-4 border-blue-500'
+                        ? 'bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] text-white'
                         : 'hover:bg-gray-50 border-l-4 border-transparent'
                     }`}
                   >
                     <span className={`text-2xl transition-transform duration-200 group-hover:scale-110 ${
-                      window.location.pathname === item.path ? 'text-blue-600' : 'text-gray-600'
+                      window.location.pathname === item.path ? 'text-white' : 'text-gray-600'
                     }`}>
                       {item.icon}
                     </span>
                     <span className={`text-lg font-medium ${
-                      window.location.pathname === item.path ? 'text-blue-600' : 'text-gray-700'
+                      window.location.pathname === item.path ? 'text-white' : 'text-gray-700'
                     }`}>
                       {item.name}
                     </span>
@@ -270,7 +275,7 @@ const ProfileUpdate = () => {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header Section */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] mb-4">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] bg-clip-text text-transparent mb-4">
             Update Your Profile
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -324,7 +329,7 @@ const ProfileUpdate = () => {
                           className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${
                             errors.fullName 
                               ? 'border-red-300 ring-2 ring-red-100 bg-red-50' 
-                              : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100'
+                              : 'border-gray-300 focus:border-[#00D5BE] focus:ring-2 focus:ring-[#00D5BE]/20'
                           }`}
                           placeholder="Enter your full name"
                           required
@@ -349,7 +354,7 @@ const ProfileUpdate = () => {
                           className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${
                             errors.email 
                               ? 'border-red-300 ring-2 ring-red-100 bg-red-50' 
-                              : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100'
+                              : 'border-gray-300 focus:border-[#00D5BE] focus:ring-2 focus:ring-[#00D5BE]/20'
                           }`}
                           placeholder="your.email@example.com"
                           required
@@ -371,7 +376,7 @@ const ProfileUpdate = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all duration-200"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00D5BE]/20 focus:border-[#00D5BE] transition-all duration-200"
                           placeholder="+1 (555) 123-4567"
                         />
                       </div>
@@ -402,7 +407,7 @@ const ProfileUpdate = () => {
                           className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${
                             errors.currentPassword 
                               ? 'border-red-300 ring-2 ring-red-100 bg-red-50' 
-                              : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100'
+                              : 'border-gray-300 focus:border-[#00D5BE] focus:ring-2 focus:ring-[#00D5BE]/20'
                           }`}
                           placeholder="Enter current password"
                         />
@@ -427,7 +432,7 @@ const ProfileUpdate = () => {
                             className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${
                               errors.newPassword 
                                 ? 'border-red-300 ring-2 ring-red-100 bg-red-50' 
-                                : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100'
+                                : 'border-gray-300 focus:border-[#00D5BE] focus:ring-2 focus:ring-[#00D5BE]/20'
                             }`}
                             placeholder="Enter new password"
                           />
@@ -451,7 +456,7 @@ const ProfileUpdate = () => {
                             className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all duration-200 ${
                               errors.confirmPassword 
                                 ? 'border-red-300 ring-2 ring-red-100 bg-red-50' 
-                                : 'border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-100'
+                                : 'border-gray-300 focus:border-[#00D5BE] focus:ring-2 focus:ring-[#00D5BE]/20'
                             }`}
                             placeholder="Confirm new password"
                           />
@@ -502,26 +507,26 @@ const ProfileUpdate = () => {
                   <span className="text-green-600 font-medium">Complete</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div className="bg-gradient-to-r from-green-400 to-green-500 h-2 rounded-full w-3/4"></div>
+                  <div className="bg-gradient-to-r from-[#00D5BE] to-[#00A3B5] h-2 rounded-full w-3/4"></div>
                 </div>
                 <p className="text-xs text-gray-500">Your profile is 75% complete</p>
               </div>
             </div>
 
             {/* Security Tips */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-200">
+            <div className="bg-gradient-to-br from-[#00D5BE]/10 to-[#00A3B5]/10 rounded-2xl p-6 border border-[#00D5BE]/20">
               <h3 className="font-semibold text-gray-800 mb-3">Security Tips</h3>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li className="flex items-start space-x-2">
-                  <span className="text-green-500 mt-0.5">✓</span>
+                  <span className="text-[#00D5BE] mt-0.5">✓</span>
                   <span>Use a strong, unique password</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="text-green-500 mt-0.5">✓</span>
+                  <span className="text-[#00D5BE] mt-0.5">✓</span>
                   <span>Enable two-factor authentication</span>
                 </li>
                 <li className="flex items-start space-x-2">
-                  <span className="text-green-500 mt-0.5">✓</span>
+                  <span className="text-[#00D5BE] mt-0.5">✓</span>
                   <span>Keep your contact info updated</span>
                 </li>
               </ul>
@@ -533,12 +538,12 @@ const ProfileUpdate = () => {
               <div className="space-y-3">
                 <button 
                   onClick={() => navigate('/user/dashboard')}
-                  className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                  className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-[#00D5BE] hover:bg-[#00D5BE]/5 transition-colors"
                 >
-                  <span className="text-blue-600 font-medium">Back to Dashboard</span>
+                  <span className="text-[#00D5BE] font-medium">Back to Dashboard</span>
                 </button>
-                <button className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-colors">
-                  <span className="text-purple-600 font-medium">Privacy Settings</span>
+                <button className="w-full text-left px-4 py-3 rounded-lg border border-gray-200 hover:border-[#00A3B5] hover:bg-[#00A3B5]/5 transition-colors">
+                  <span className="text-[#00A3B5] font-medium">Privacy Settings</span>
                 </button>
               </div>
             </div>
