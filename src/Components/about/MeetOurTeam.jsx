@@ -168,12 +168,7 @@ const MeetOurTeam = () => {
   // Marketing Team
   const marketingTeam = [
     {
-      name: "Mohsin",
-      role: "Marketing Team",
-      desc: "Leads strategic marketing initiatives and campaigns to expand brand reach and drive business growth through innovative marketing solutions.",
-    },
-    {
-      name: "Farhan Khan and team",
+      name: "Jhandad Khan and team",
       role: "Social Media Management",
       desc: "Specializes in Social Media strategies, and online campaign management to maximize brand visibility and engagement.",
     }
@@ -193,8 +188,7 @@ const MeetOurTeam = () => {
     "Amna Kousar": "", // یہاں امیج پاتھ شامل کریں
     "Asadullah Jan": "",
     "Anum Malik": "",
-    "Mohsin": "",
-    "Farhan Khan": "",
+    "Jhandad Khan": "",
     "Social Media Management Team": "",
   };
 
