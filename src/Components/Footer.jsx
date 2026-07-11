@@ -205,7 +205,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="text-center lg:text-left" data-aos="fade-right">
             <p className="text-gray-400">
-              © 2025 <span className="text-[#FFB900] font-bold">Amna's Network</span>. 
+              © {new Date().getFullYear()} <span className="text-[#FFB900] font-bold">Amna's Network</span>. 
               All Rights Reserved.
             </p>
           </div>
